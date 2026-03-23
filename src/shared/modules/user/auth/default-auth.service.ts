@@ -9,7 +9,7 @@ import { LoginUserDto } from '../dto/login-user.dto.js';
 import { UserService } from '../user-service.interface.js';
 import { UserEntity } from '../user.entity.js';
 import { AuthService } from './auth-service.interface..js';
-import { JWT_ALGORITHM, JWT_EXPIRED } from './auth.constant.js';
+import { authControllerDict } from './auth.constant.js';
 import { UserNotFoundException } from './errors/user-not-found.exception.js';
 import { UserPasswordIncorrectException } from './errors/user-password-incorrect.exception.js';
 import { TokenPayload } from './types/token-payload.js';
@@ -35,9 +35,9 @@ export class DefaultAuthService implements AuthService {
 
     this.logger.info(`Create token for ${user.email}`);
     return new SignJWT(tokenPayload)
-      .setProtectedHeader({ alg: JWT_ALGORITHM })
+      .setProtectedHeader({ alg: authControllerDict.JWT_ALGORITHM })
       .setIssuedAt()
-      .setExpirationTime(JWT_EXPIRED)
+      .setExpirationTime(authControllerDict.JWT_EXPIRED)
       .sign(secretKey);
   }
 

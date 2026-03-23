@@ -1,13 +1,9 @@
 import dayjs from 'dayjs';
 import { generateRandomValue, getRandomItem, getRandomItems } from '../../helpers/index.js';
 import { MockServerData, OfferTypeEnum, } from '../../types/index.js';
+import { tsvOfferGeneratorDict } from './constants.js';
 import { OfferGenerator } from './offer-generator.interface.js';
 
-const MIN_PRICE = 500;
-const MAX_PRICE = 2000;
-
-const FIRST_WEEK_DAY = 1;
-const LAST_WEEK_DAY = 7;
 
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}
@@ -18,7 +14,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     const previewImage = getRandomItem<string>(this.mockData.previewImages);
     const images = getRandomItems(this.mockData.images).join(';');
     const type = getRandomItem([OfferTypeEnum.Buy, OfferTypeEnum.Sell]);
-    const price = generateRandomValue(MIN_PRICE, MAX_PRICE).toString();
+    const price = generateRandomValue(tsvOfferGeneratorDict.MIN_PRICE, tsvOfferGeneratorDict.MAX_PRICE).toString();
     const city = getRandomItem<string>(this.mockData.cities);
     const isPremium = getRandomItem<boolean>(this.mockData.isPremium).toString();
     const isFavorite = getRandomItem<boolean>(this.mockData.isFavorite).toString();
@@ -37,7 +33,7 @@ export class TSVOfferGenerator implements OfferGenerator {
     const account = getRandomItem<string>(this.mockData.accounts);
 
     const createdDate = dayjs()
-      .subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day')
+      .subtract(generateRandomValue(tsvOfferGeneratorDict.FIRST_WEEK_DAY, tsvOfferGeneratorDict.LAST_WEEK_DAY), 'day')
       .toISOString();
 
 
